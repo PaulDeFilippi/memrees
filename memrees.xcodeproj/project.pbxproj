@@ -12,6 +12,8 @@
 		4F899C0C1EB5592D00B792BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F899C0A1EB5592D00B792BA /* Main.storyboard */; };
 		4F899C0E1EB5592D00B792BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F899C0D1EB5592D00B792BA /* Assets.xcassets */; };
 		4F899C111EB5592D00B792BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F899C0F1EB5592D00B792BA /* LaunchScreen.storyboard */; };
+		4F899C191EB56AF600B792BA /* MemoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F899C181EB56AF600B792BA /* MemoriesViewController.swift */; };
+		4F899C1F1EB56CA400B792BA /* MemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F899C1E1EB56CA400B792BA /* MemoryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		4F899C0D1EB5592D00B792BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F899C101EB5592D00B792BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F899C121EB5592D00B792BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F899C181EB56AF600B792BA /* MemoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
+		4F899C1E1EB56CA400B792BA /* MemoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +61,11 @@
 				4F899C061EB5592D00B792BA /* AppDelegate.swift */,
 				4F899C081EB5592D00B792BA /* ViewController.swift */,
 				4F899C0A1EB5592D00B792BA /* Main.storyboard */,
+				4F899C181EB56AF600B792BA /* MemoriesViewController.swift */,
 				4F899C0D1EB5592D00B792BA /* Assets.xcassets */,
 				4F899C0F1EB5592D00B792BA /* LaunchScreen.storyboard */,
 				4F899C121EB5592D00B792BA /* Info.plist */,
+				4F899C1E1EB56CA400B792BA /* MemoryCell.swift */,
 			);
 			path = memrees;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F899C1F1EB56CA400B792BA /* MemoryCell.swift in Sources */,
+				4F899C191EB56AF600B792BA /* MemoriesViewController.swift in Sources */,
 				4F899C091EB5592D00B792BA /* ViewController.swift in Sources */,
 				4F899C071EB5592D00B792BA /* AppDelegate.swift in Sources */,
 			);
@@ -265,10 +273,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 963UXK3MCT;
 				INFOPLIST_FILE = memrees/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Paul-DeFilippi.memrees";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -278,10 +288,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 963UXK3MCT;
 				INFOPLIST_FILE = memrees/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Paul-DeFilippi.memrees";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -304,6 +316,7 @@
 				4F899C171EB5592D00B792BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

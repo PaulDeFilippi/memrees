@@ -37,9 +37,14 @@
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We use this to let you import photos into the app</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We use this to record your voice</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>We use this to transcribe your voice recording to text</string>
 </dict>
 </plist>
