@@ -17,6 +17,7 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
     var activeMemory: URL!
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL!
+    var audioPlayer: AVAudioPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -270,6 +271,8 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
     
     func recordMemory() {
         
+        audioPlayer?.stop()
+        
         collectionView?.backgroundColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 1.0)
         
         let recordingSession = AVAudioSession.sharedInstance()
@@ -308,7 +311,7 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
         if success {
             do {
                 // create a URL out of the active memory URL + m4a
-                let memoryAudioURL = activeMemory.appendingPathComponent("m4a")
+                let memoryAudioURL = activeMemory.appendingPathExtension("m4a")
                 let fm = FileManager.default
                 
                 // delete existing recordings
@@ -361,12 +364,34 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
                 } catch {
                     print("Failed to save transcription")
                 }
-                
             }
-        
         }
     }
-
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let memory = memories[indexPath.row]
+        let fm = FileManager.default
+        
+        do {
+            
+            let audioName = audioURL(for: memory)
+            let transcriptionName = transcriptionURL(for: memory)
+            
+            if fm.fileExists(atPath: audioName.path) {
+                audioPlayer = try AVAudioPlayer(contentsOf: audioName)
+                audioPlayer?.play()
+            }
+            
+            if fm.fileExists(atPath: audioName.path) {
+                let contents = try String(contentsOf: transcriptionName)
+                
+                print(contents)
+            }
+        } catch {
+            print("Error loading audio")
+        }
+    }
     
 
     /*
