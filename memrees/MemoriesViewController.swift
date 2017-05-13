@@ -332,7 +332,39 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
     
     func transcribeAudio(memory: URL) {
         
+        // get paths to where the audio is and where the transcription should be
+        let audio = audioURL(for: memory)
+        let transcription = transcriptionURL(for: memory)
         
+        // create a new recognizer and point it at our audio
+        let recognizer = SFSpeechRecognizer()
+        let request = SFSpeechURLRecognitionRequest(url: audio)
+        
+        // start recognition
+        recognizer?.recognitionTask(with: request) { [unowned self] (result, error) in
+            
+            // abort if we didnt get any transcription back
+            guard let result = result else {
+                print("There was an error: \(error!)")
+                return
+            }
+            
+            // if we got the final transcription back we need to write it to disk
+            if result.isFinal {
+                
+                // pull out the best transcription
+                let text = result.bestTranscription.formattedString
+                
+                // and write it to disk at the correct filename for this memory
+                do {
+                    try text.write(to: transcription, atomically: true, encoding: String.Encoding.utf8)
+                } catch {
+                    print("Failed to save transcription")
+                }
+                
+            }
+        
+        }
     }
 
     
@@ -346,5 +378,8 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
         // Pass the selected object to the new view controller.
     }
     */
+
+    
+
 
 }
