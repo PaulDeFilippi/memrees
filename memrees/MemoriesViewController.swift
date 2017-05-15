@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 import Photos
 import Speech
+import CoreSpotlight
+import MobileCoreServices
 
 class MemoriesViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, AVAudioRecorderDelegate {
     
@@ -303,7 +305,7 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
     func finishRecording(success: Bool) {
         
         // set background back to original state - color
-        collectionView?.backgroundColor = UIColor.gray
+        collectionView?.backgroundColor = UIColor.darkGray
         
         // stop the recording
         audioRecorder?.stop()
@@ -316,7 +318,7 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
                 
                 // delete existing recordings
                 if fm.fileExists(atPath: memoryAudioURL.path) {
-                    try fm.moveItem(at: recordingURL, to: memoryAudioURL)
+                    try fm.moveItem(at: memoryAudioURL, to: memoryAudioURL)
                 }
                 // move recorded file into the memories audio URL
                 try fm.moveItem(at: recordingURL, to: memoryAudioURL)
@@ -361,6 +363,8 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
                 // and write it to disk at the correct filename for this memory
                 do {
                     try text.write(to: transcription, atomically: true, encoding: String.Encoding.utf8)
+                    self.indexMemory(memory: memory, text: text)
+                    
                 } catch {
                     print("Failed to save transcription")
                 }
@@ -374,7 +378,6 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
         let fm = FileManager.default
         
         do {
-            
             let audioName = audioURL(for: memory)
             let transcriptionName = transcriptionURL(for: memory)
             
@@ -383,13 +386,39 @@ class MemoriesViewController: UICollectionViewController, UIImagePickerControlle
                 audioPlayer?.play()
             }
             
-            if fm.fileExists(atPath: audioName.path) {
+            if fm.fileExists(atPath: transcriptionName.path) {
                 let contents = try String(contentsOf: transcriptionName)
                 
                 print(contents)
             }
         } catch {
             print("Error loading audio")
+        }
+    }
+    
+    func indexMemory(memory: URL, text: String) {
+        
+        // create a basic attribute set
+        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+        
+        attributeSet.title = "Memrees APP Memory"
+        attributeSet.contentDescription = text
+        
+        // wrap it in a searchable item using the memory's full path as its unique identifier
+        let item = CSSearchableItem(uniqueIdentifier: memory.path, domainIdentifier: "com.namasteapps", attributeSet: attributeSet)
+        
+        // make it never expire
+        item.expirationDate = Date.distantFuture
+        
+        // asl spotlight to index the item
+        CSSearchableIndex.default().indexSearchableItems([item]) { error in
+            if let error = error {
+                print("Indexing error: \(error.localizedDescription)")
+                
+            } else {
+                print("Search item successfully indexed: \(text)")
+                
+            }
         }
     }
     
